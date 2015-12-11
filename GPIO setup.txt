@@ -1,0 +1,18 @@
+GPIO setup:
+
+FM: 21
+MW: 13
+LW: 12
+
+LED: 5
+
+
+SPICLK = 20
+SPIMISO = 26
+SPIMOSI = 19
+SPICS = 16
+
+Chip Volume = 6
+chip Tune = 7
+
+not in use = 6
