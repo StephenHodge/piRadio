@@ -22,7 +22,6 @@ waveBand = ""
 trim_pot_vol = 0
 trim_pot_tune = 0
 
-
 # change these as desired - they're the pins connected from the
 # SPI port on the ADC to the Cobbler
 SPICLK = 20
@@ -45,6 +44,7 @@ GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
+print currentChannel
 
 def ledMode(Mode):
     GPIO.output(LED_PIN, Mode)
