@@ -95,66 +95,66 @@ def playStation(trim_pot_tune):
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/BBC1.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-            if ((trim_pot_tune >= 170) & (trim_pot_tune < 340)) & (currentChannel != "Radio_Two"):
+            else ((trim_pot_tune >= 170) & (trim_pot_tune < 340)) & (currentChannel != "Radio_Two"):
                 currentChannel = "Radio Two"
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/BBC2.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-            if ((trim_pot_tune >= 340) & (trim_pot_tune < 510)) & (currentChannel != "Radio_Three"):
+            else ((trim_pot_tune >= 340) & (trim_pot_tune < 510)) & (currentChannel != "Radio_Three"):
                 currentChannel = "Radio Three"
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/BBC3.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-            if ((trim_pot_tune >= 510) & (trim_pot_tune < 680)) & (currentChannel != "Radio_Four"):
+            else ((trim_pot_tune >= 510) & (trim_pot_tune < 680)) & (currentChannel != "Radio_Four"):
                 currentChannel = "Radio Four"
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/BBC4.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-            if ((trim_pot_tune >= 680) & (trim_pot_tune <= 850)) & (currentChannel != "Radio_Five"):
+            else ((trim_pot_tune >= 680) & (trim_pot_tune <= 850)) & (currentChannel != "Radio_Five"):
                 currentChannel = "Radio Five"
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/BBC5Live.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-            if ((trim_pot_tune >= 850) & (trim_pot_tune < 1024)) & (currentChannel != "Six_Music"):
+            else ((trim_pot_tune >= 850) & (trim_pot_tune < 1024)) & (currentChannel != "Six_Music"):
                 currentChannel = "Six Music"
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/BBC6Music.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-        else if waveBand == "Secular":
+        else waveBand == "Secular":
 
             if ((trim_pot_tune >= 0) & (trim_pot_tune < 341) & (currentChannel != "Radio_Devon")):
                 currentChannel = "Radio_Devon"
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/BBCRadioDevon.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-            else if ((trim_pot_tune >= 341) & (trim_pot_tune < 682) & (currentChannel != "ClassicFM")):
+            else ((trim_pot_tune >= 341) & (trim_pot_tune < 682) & (currentChannel != "ClassicFM")):
                 currentChannel = "ClassicFM"
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/ClassicFM.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-            else if ((trim_pot_tune >= 341) & (trim_pot_tune < 682) & (currentChannel != "RadioNorthDevon")):
+            else ((trim_pot_tune >= 341) & (trim_pot_tune < 682) & (currentChannel != "RadioNorthDevon")):
                 currentChannel = "RadioNorthDevon"
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/RadioNorthDevon.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-        else if waveBand == "Christian":
+        else waveBand == "Christian":
 
             if ((trim_pot_tune >= 0) & (trim_pot_tune < 256) & (currentChannel != "CrossRhythms2")):
                 currentChannel = "CrossRhythms2"
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/CrossRhythms2.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-            else if ((trim_pot_tune >= 256) & (trim_pot_tune < 512) & (currentChannel != "CrossRhythms")):
+            else ((trim_pot_tune >= 256) & (trim_pot_tune < 512) & (currentChannel != "CrossRhythms")):
                 currentChannel = "CrossRhythms"
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/CrossRhythms.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-            else if ((trim_pot_tune >= 512) & (trim_pot_tune < 768) & (currentChannel != "HopeFM")):
+            else ((trim_pot_tune >= 512) & (trim_pot_tune < 768) & (currentChannel != "HopeFM")):
                 currentChannel = "HopeFM"
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/HopeFM.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-            else if ((trim_pot_tune >= 768) & (trim_pot_tune < 1024) & (currentChannel != "PremareLondon")):
+            else ((trim_pot_tune >= 768) & (trim_pot_tune < 1024) & (currentChannel != "PremareLondon")):
                 currentChannel = "PremareLondon"
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/PremareLondon.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
