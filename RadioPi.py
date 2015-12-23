@@ -18,10 +18,7 @@ lastTrimPot_tune = 0
 lastTrimPot_vol = 0
 currentChannel = ""
 trimTollerance = 10
-waveBand = "";
-
-trim_pot_vol = 0
-trim_pot_tune = 0
+waveBand = ""
 
 # change these as desired - they're the pins connected from the
 # SPI port on the ADC to the Cobbler
@@ -85,7 +82,7 @@ def readadc(adcnum, clockpin, mosipin, misopin, cspin):
         adcout >>= 1       # first bit is 'null' so drop it
         return adcout
 
-def playStation():
+def playStation(trim_pot_tune):
 
     trimDifference_tune = abs(trim_pot_tune - lastTrimPot_tune)
 
@@ -164,7 +161,7 @@ def playStation():
 
         lastTrimPot_tune = trim_pot_tune
 
-def adjustVolume():
+def adjustVolume(trim_pot_vol):
 
     #trim_pot = readadc(potentiometer_adc, SPICLK, SPIMOSI, SPIMISO, SPICS)
     #print trim_pot
@@ -199,11 +196,8 @@ while True:
     if input_state == False:
         waveBand = "Christian"
 
-    trim_pot_vol = readadc(potentiometer_vol, SPICLK, SPIMOSI, SPIMISO, SPICS)
-    trim_pot_tune = readadc(potentiometer_tune, SPICLK, SPIMOSI, SPIMISO, SPICS)
-
-    adjustVolume()
-    playStation()
+    adjustVolume(readadc(potentiometer_vol, SPICLK, SPIMOSI, SPIMISO, SPICS))
+    playStation(readadc(potentiometer_tune, SPICLK, SPIMOSI, SPIMISO, SPICS))
 
     print "----"
     time.sleep(0.5)
