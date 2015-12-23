@@ -19,8 +19,8 @@ lastTrimPot_vol = 0
 currentChannel = ""
 trimTollerance = 10
 waveBand = ""
-trim_pot_vol = 0;
-trim_pot_tune = 0;
+trim_pot_vol = 0
+trim_pot_tune = 0
 
 
 # change these as desired - they're the pins connected from the
