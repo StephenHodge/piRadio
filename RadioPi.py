@@ -51,6 +51,10 @@ def ledMode(Mode):
 
 # read SPI data from MCP3008 chip, 8 possible adc's (0 thru 7)
 def readadc(adcnum, clockpin, mosipin, misopin, cspin):
+
+        print adcnum
+        print "---"
+
         if ((adcnum > 7) or (adcnum < 0)):
                 return -1
         GPIO.output(cspin, True)
