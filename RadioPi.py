@@ -19,6 +19,8 @@ lastTrimPot_vol = 0
 currentChannel = ""
 trimTollerance = 10
 waveBand = ""
+trim_pot_vol = 0;
+trim_pot_tune = 0;
 
 # change these as desired - they're the pins connected from the
 # SPI port on the ADC to the Cobbler
@@ -32,6 +34,10 @@ GPIO.setup(SPIMOSI, GPIO.OUT)
 GPIO.setup(SPIMISO, GPIO.IN)
 GPIO.setup(SPICLK, GPIO.OUT)
 GPIO.setup(SPICS, GPIO.OUT)
+
+# 10k trim pot connected to adc #0
+potentiometer_tune = 7
+potentiometer_vol = 6
 
 #setups for the buttons
 GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -174,9 +180,6 @@ def adjustVolume(trim_pot_vol):
         print set_vol_cmd
         lastTrimPot_vol = trim_pot_vol
 
-# 10k trim pot connected to adc #0
-potentiometer_tune = 7
-potentiometer_vol = 6;
 
 while True:
 
