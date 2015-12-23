@@ -110,6 +110,7 @@ while True:
 
     if trimDifference_tune >= trimTollerance:
 
+        ledMode(False)
         print "tune:"
         print trim_pot_tune
         print "..."
@@ -119,26 +120,31 @@ while True:
             if (trim_pot_tune < 250) & (currentChannel != "Radio_One"):
                 currentChannel = "Radio_One"
                 print currentChannel
+                ledMode(True)
                 process = subprocess.Popen("./RadioStreams/BBC1.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
             if ((trim_pot_tune >= 250) & (trim_pot_tune < 300)) & (currentChannel != "Radio_Two"):
                 currentChannel = "Radio_Two"
                 print currentChannel
+                ledMode(True)
                 process = subprocess.Popen("./RadioStreams/BBC2.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
             if ((trim_pot_tune >= 300) & (trim_pot_tune < 350)) & (currentChannel != "Radio_Three"):
                 currentChannel = "Radio_Three"
                 print currentChannel
+                ledMode(True)
                 process = subprocess.Popen("./RadioStreams/BBC3.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
             if ((trim_pot_tune >= 350) & (trim_pot_tune < 400)) & (currentChannel != "Radio_Four"):
                 currentChannel = "Radio_Four"
                 print currentChannel
+                ledMode(True)
                 process = subprocess.Popen("./RadioStreams/BBC4.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
             if (trim_pot_tune >= 400) & (currentChannel != "Radio_Five"):
                 currentChannel = "Radio_Five"
                 print currentChannel
+                ledMode(True)
                 process = subprocess.Popen("./RadioStreams/BBC5Live.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
         if waveBand == 2:
@@ -146,31 +152,37 @@ while True:
             if (trim_pot_tune < 250) & (currentChannel != "Six_Music"):
                 currentChannel = "Six_Music"
                 print currentChannel
+                ledMode(True)
                 process = subprocess.Popen("./RadioStreams/BBC6Music.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
             if ((trim_pot_tune >= 250) & (trim_pot_tune < 300)) & (currentChannel != "Radio_Devon"):
                 currentChannel = "Radio_Devon"
                 print currentChannel
+                ledMode(True)
                 process = subprocess.Popen("./RadioStreams/BBCRadioDevon.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
             if ((trim_pot_tune >= 300) & (trim_pot_tune < 350)) & (currentChannel != "ClassicFM"):
                 currentChannel = "ClassicFM"
                 print currentChannel
+                ledMode(True)
                 process = subprocess.Popen("./RadioStreams/ClassicFM.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
             if ((trim_pot_tune >= 350) & (trim_pot_tune < 400)) & (currentChannel != "CrossRhythms"):
                 currentChannel = "CrossRhythms"
                 print currentChannel
+                ledMode(True)
                 process = subprocess.Popen("./RadioStreams/CrossRhythms.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
             if ((trim_pot_tune >= 400) & (trim_pot_tune <= 450)) & (currentChannel != "CrossRhythms2"):
                 currentChannel = "CrossRhythms2"
                 print currentChannel
+                ledMode(True)
                 process = subprocess.Popen("./RadioStreams/CrossRhythms2.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
             if (trim_pot_tune >= 450) & (currentChannel != "HopeFM"):
                 currentChannel = "HopeFM"
                 print currentChannel
+                ledMode(True)
                 process = subprocess.Popen("./RadioStreams/HopeFM.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
         if waveBand == 3:
@@ -178,11 +190,13 @@ while True:
             if (trim_pot_tune < 250) & (currentChannel != "PremareLondon"):
                 currentChannel = "PremareLondon"
                 print currentChannel
+                ledMode(True)
                 process = subprocess.Popen("./RadioStreams/PremareLondon.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
             if ((trim_pot_tune >= 250)) & (currentChannel != "RadioNorthDevon"):
                 currentChannel = "RadioNorthDevon"
                 print currentChannel
+                ledMode(True)
                 process = subprocess.Popen("./RadioStreams/RadioNorthDevon.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
         lastTrimPot_tune = trim_pot_tune
