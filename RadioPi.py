@@ -92,10 +92,10 @@ while True:
     if input_state1 == False:
         waveBand = 1
         #print("Button is PIN 21 DOWN")
-    else input_state2 == False:
+    if input_state2 == False:
         waveBand = 2
         #print("Button is PIN 13 DOWN")
-    else input_state3 == False:
+    if input_state3 == False:
         waveBand = 3
         #print("Button is PIN 12 DOWN")
 
