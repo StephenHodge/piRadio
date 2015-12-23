@@ -100,6 +100,7 @@ while True:
         waveBand = 3
         #print("Button is PIN 12 DOWN")
     if (input_state1 == False) & (input_state2 == False) & (input_state3 == False) & (gitUpdate == 0):
+        print "updating now"
         gitUpdate = 1
         process = subprocess.Popen("./updateFromGit.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
