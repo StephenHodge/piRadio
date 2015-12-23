@@ -137,7 +137,7 @@ def playStation(trim_pot_tune):
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/RadioNorthDevon.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-        if waveBand == "Christian":
+        waveBand == "Christian":
 
             if ((trim_pot_tune >= 0) & (trim_pot_tune < 256) & (currentChannel != "CrossRhythms2")):
                 currentChannel = "CrossRhythms2"
@@ -196,7 +196,7 @@ while True:
     if input_state == False:
         waveBand = "Christian"
 
-#    adjustVolume(readadc(potentiometer_vol, SPICLK, SPIMOSI, SPIMISO, SPICS))
+    adjustVolume(readadc(potentiometer_vol, SPICLK, SPIMOSI, SPIMISO, SPICS))
     playStation(readadc(potentiometer_tune, SPICLK, SPIMOSI, SPIMISO, SPICS))
 
     print "----"
