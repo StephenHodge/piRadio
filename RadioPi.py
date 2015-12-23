@@ -172,9 +172,9 @@ def adjustVolume(trim_pot_vol):
     #trim_pot = readadc(potentiometer_adc, SPICLK, SPIMOSI, SPIMISO, SPICS)
     #print trim_pot
 
-    trimDifference_vol = abs(lastTrimPot_vol - trim_pot_vol)
+    #trimDifference_vol = abs(lastTrimPot_vol - trim_pot_vol)
 
-    if trimDifference_vol >= trimTollerance:
+    #if trimDifference_vol >= trimTollerance:
 
         set_volume = trim_pot_vol / 10.24       # convert 10bit adc0 (0-1024) trim pot read into 0-100 volume level
         set_volume = round(set_volume)          # round out decimal value
@@ -184,7 +184,7 @@ def adjustVolume(trim_pot_vol):
         print 'volume set to:'
         print set_vol_cmd
 
-    lastTrimPot_vol = trim_pot_vol
+    #lastTrimPot_vol = trim_pot_vol
 
 
 while True:
