@@ -95,7 +95,7 @@ while True:
     if input_state1 == False & input_state2 == True & input_state3 == True:
         waveBand = 1
 
-    if input_state2 == False &input_state1 == True & input_state3 == True:
+    if input_state2 == False & input_state1 == True & input_state3 == True:
         waveBand = 2
 
     if input_state3 == False &  input_state1 == True & input_state2 == True:
