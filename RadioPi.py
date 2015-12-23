@@ -22,6 +22,7 @@ waveBand = ""
 trim_pot_vol = 0;
 trim_pot_tune = 0;
 
+
 # change these as desired - they're the pins connected from the
 # SPI port on the ADC to the Cobbler
 SPICLK = 20
