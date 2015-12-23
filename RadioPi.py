@@ -196,7 +196,7 @@ while True:
     if input_state == False:
         waveBand = "Christian"
 
-    adjustVolume(readadc(potentiometer_vol, SPICLK, SPIMOSI, SPIMISO, SPICS))
+#    adjustVolume(readadc(potentiometer_vol, SPICLK, SPIMOSI, SPIMISO, SPICS))
     playStation(readadc(potentiometer_tune, SPICLK, SPIMOSI, SPIMISO, SPICS))
 
     print "----"
