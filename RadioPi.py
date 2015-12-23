@@ -16,9 +16,9 @@ GPIO.setup(LED_PIN, GPIO.OUT)
 DEBUG = 1
 lastTrimPot_tune = 0
 lastTrimPot_vol = 0
-currentChannel = ""
+currentChannel = "none"
 trimTollerance = 10
-waveBand = ""
+waveBand = "none"
 trim_pot_vol = 0
 trim_pot_tune = 0
 
