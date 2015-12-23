@@ -90,9 +90,9 @@ def readadc(adcnum, clockpin, mosipin, misopin, cspin):
 
 def playStation(trim_pot_tune):
 
-    trimDifference_tune = abs(trim_pot_tune - lastTrimPot_tune)
+#    trimDifference_tune = abs(trim_pot_tune - lastTrimPot_tune)
 
-    if trimDifference_tune >= trimTollerance:
+#    if trimDifference_tune >= trimTollerance:
 
         if waveBand == "BBC":
 
@@ -165,7 +165,7 @@ def playStation(trim_pot_tune):
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/PremareLondon.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-    lastTrimPot_tune = trim_pot_tune
+#    lastTrimPot_tune = trim_pot_tune
 
 def adjustVolume(trim_pot_vol):
 
