@@ -99,9 +99,7 @@ while True:
         waveBand = 3
         #print("Button is PIN 12 DOWN")
     if (input_state1 == False) & (input_state2 == False) & (input_state3 == False):
-        print "COKAA"
-
-
+        process = subprocess.Popen("./updateFromGit.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
     # read the analog pin
     trim_pot_tune = readadc(potentiometer_tune, SPICLK, SPIMOSI, SPIMISO, SPICS)
