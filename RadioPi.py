@@ -82,6 +82,101 @@ def readadc(adcnum, clockpin, mosipin, misopin, cspin):
         adcout >>= 1       # first bit is 'null' so drop it
         return adcout
 
+def playStation(trim_pot_tune):
+
+    trimDifference_tune = abs(trim_pot_tune - lastTrimPot_tune)
+
+    if trimDifference_tune >= trimTollerance:
+
+        if(waveBand == "BBC"):
+
+            if ((trim_pot_tune >= 0) & (trim_pot_tune < 170)) & (currentChannel != "Radio_One"):
+                currentChannel = "Radio One"
+                print currentChannel
+                processStream = subprocess.Popen("./RadioStreams/BBC1.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+            if ((trim_pot_tune >= 170) & (trim_pot_tune < 340)) & (currentChannel != "Radio_Two"):
+                currentChannel = "Radio Two"
+                print currentChannel
+                processStream = subprocess.Popen("./RadioStreams/BBC2.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+            if ((trim_pot_tune >= 340) & (trim_pot_tune < 510)) & (currentChannel != "Radio_Three"):
+                currentChannel = "Radio Three"
+                print currentChannel
+                processStream = subprocess.Popen("./RadioStreams/BBC3.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+            if ((trim_pot_tune >= 510) & (trim_pot_tune < 680)) & (currentChannel != "Radio_Four"):
+                currentChannel = "Radio Four"
+                print currentChannel
+                processStream = subprocess.Popen("./RadioStreams/BBC4.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+            if ((trim_pot_tune >= 680) & (trim_pot_tune <= 850)) & (currentChannel != "Radio_Five"):
+                currentChannel = "Radio Five"
+                print currentChannel
+                processStream = subprocess.Popen("./RadioStreams/BBC5Live.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+            if ((trim_pot_tune >= 850) & (trim_pot_tune < 1024)) & (currentChannel != "Six_Music"):
+                currentChannel = "Six Music"
+                print currentChannel
+                processStream = subprocess.Popen("./RadioStreams/BBC6Music.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+        else if(waveBand == "Secular"):
+
+            if ((trim_pot_tune >= 0) & (trim_pot_tune < 341) & (currentChannel != "Radio_Devon")):
+                currentChannel = "Radio_Devon"
+                print currentChannel
+                processStream = subprocess.Popen("./RadioStreams/BBCRadioDevon.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+            else if ((trim_pot_tune >= 341) & (trim_pot_tune < 682) & (currentChannel != "ClassicFM")):
+                currentChannel = "ClassicFM"
+                print currentChannel
+                processStream = subprocess.Popen("./RadioStreams/ClassicFM.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+            else if ((trim_pot_tune >= 341) & (trim_pot_tune < 682) & (currentChannel != "RadioNorthDevon")):
+                currentChannel = "RadioNorthDevon"
+                print currentChannel
+                processStream = subprocess.Popen("./RadioStreams/RadioNorthDevon.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+        else if(waveBand == "Christian"):
+
+            if ((trim_pot_tune >= 0) & (trim_pot_tune < 256) & (currentChannel != "CrossRhythms2")):
+                currentChannel = "CrossRhythms2"
+                print currentChannel
+                processStream = subprocess.Popen("./RadioStreams/CrossRhythms2.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+            else if ((trim_pot_tune >= 256) & (trim_pot_tune < 512) & (currentChannel != "CrossRhythms")):
+                currentChannel = "CrossRhythms"
+                print currentChannel
+                processStream = subprocess.Popen("./RadioStreams/CrossRhythms.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+            else if ((trim_pot_tune >= 512) & (trim_pot_tune < 768) & (currentChannel != "HopeFM")):
+                currentChannel = "HopeFM"
+                print currentChannel
+                processStream = subprocess.Popen("./RadioStreams/HopeFM.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+            else if ((trim_pot_tune >= 768) & (trim_pot_tune < 1024) & (currentChannel != "PremareLondon")):
+                currentChannel = "PremareLondon"
+                print currentChannel
+                processStream = subprocess.Popen("./RadioStreams/PremareLondon.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+        lastTrimPot_tune = trim_pot_tune
+
+def adjustVolume(lastTrimPot_vol):
+        #trim_pot = readadc(potentiometer_adc, SPICLK, SPIMOSI, SPIMISO, SPICS)
+        #print trim_pot
+        trimDifference_vol = abs(lastTrimPot_vol - lastTrimPot_vol)
+
+        if trimDifference_vol >= trimTollerance:
+            set_volume = trim_pot_vol / 10.24       # convert 10bit adc0 (0-1024) trim pot read into 0-100 volume level
+            set_volume = round(set_volume)          # round out decimal value
+            set_volume = int(set_volume)            # cast volume as integer
+            set_vol_cmd = 'sudo amixer cset numid=1 -- {volume}% > /dev/null' .format(volume = set_volume)
+            os.system(set_vol_cmd)  # set volume
+            print 'volume set to:'
+            print set_vol_cmd
+
+        lastTrimPot_vol = trim_pot_vol
+
 
 while True:
 
@@ -89,71 +184,18 @@ while True:
 
     input_state = GPIO.input(21)
     if input_state == False:
-        print("Button is PIN 21 DOWN")
+        waveBand = "BBC"
 
     input_state = GPIO.input(13)
     if input_state == False:
-        print("Button is PIN 13 DOWN")
+        waveBand = "Secular"
 
     input_state = GPIO.input(12)
     if input_state == False:
-        print("Button is PIN 12 DOWN")
+        waveBand = "Christian"
 
+    adjustVolume(readadc(potentiometer_vol, SPICLK, SPIMOSI, SPIMISO, SPICS))
+    playStation(readadc(potentiometer_tune, SPICLK, SPIMOSI, SPIMISO, SPICS))
 
-        # read the analog pin
-        trim_pot_tune = readadc(potentiometer_tune, SPICLK, SPIMOSI, SPIMISO, SPICS)
-        trimDifference_tune = abs(trim_pot_tune - lastTrimPot_tune)
-
-        if trimDifference_tune >= trimTollerance:
-
-            print trim_pot_tune
-
-
-            if ((trim_pot_tune >= 0) & (trim_pot_tune < 170)) & (currentChannel != "Radio One"):
-                currentChannel = "Radio One"
-                print currentChannel
-                process = subprocess.Popen("./RadioStreams/BBC1.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
-
-            if ((trim_pot_tune >= 170) & (trim_pot_tune < 340)) & (currentChannel != "Radio Two"):
-                currentChannel = "Radio Two"
-                print currentChannel
-                process = subprocess.Popen("./RadioStreams/BBC2.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
-
-            if ((trim_pot_tune >= 340) & (trim_pot_tune < 510)) & (currentChannel != "Radio Three"):
-                currentChannel = "Radio Three"
-                print currentChannel
-                process = subprocess.Popen("./RadioStreams/BBC3.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
-
-            if ((trim_pot_tune >= 510) & (trim_pot_tune < 680)) & (currentChannel != "Radio Four"):
-                currentChannel = "Radio Four"
-                print currentChannel
-                process = subprocess.Popen("./RadioStreams/BBC4.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
-
-            if ((trim_pot_tune >= 680) & (trim_pot_tune <= 850)) & (currentChannel != "Radio Five"):
-                currentChannel = "Radio Five"
-                print currentChannel
-                process = subprocess.Popen("./RadioStreams/BBC5Live.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
-
-            if ((trim_pot_tune >= 850) & (trim_pot_tune < 1024)) & (currentChannel != "Six Music"):
-                currentChannel = "Six Music"
-                print currentChannel
-                process = subprocess.Popen("./RadioStreams/BBC6Music.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
-
-        lastTrimPot_tune = trim_pot_tune
-
-        # read the analog pin
-        trim_pot_vol = readadc(potentiometer_vol, SPICLK, SPIMOSI, SPIMISO, SPICS)
-        print trim_pot_vol
-        trimDifference = abs(trim_pot_vol - lastTrimPot_vol)
-
-        if trimDifference >= trimTollerance:
-            set_volume = trim_pot_vol / 10.24           # convert 10bit adc0 (0-1024) trim pot read into 0-100 volume level
-            set_volume = round(set_volume)          # round out decimal value
-            set_volume = int(set_volume)            # cast volume as integer
-            set_vol_cmd = 'sudo amixer cset numid=1 -- {volume}% > /dev/null' .format(volume = set_volume)
-            os.system(set_vol_cmd)  # set volume
-
-        lastTrimPot_vol = trim_pot_vol
-
-        print "----"
-        time.sleep(0.5)
+    print "----"
+    time.sleep(0.5)
