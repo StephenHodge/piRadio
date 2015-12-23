@@ -89,17 +89,15 @@ while True:
     input_state2 = GPIO.input(13)
     input_state3 = GPIO.input(12)
 
-    if input_state1 == False & input_state2 == False & input_state3 == False:
-        print "hello"
-
-    if input_state1 == False & input_state2 == True & input_state3 == True:
+    if input_state1 == False:
         waveBand = 1
-
-    if input_state2 == False & input_state1 == True & input_state3 == True:
+        #print("Button is PIN 21 DOWN")
+    else input_state2 == False:
         waveBand = 2
-
-    if input_state3 == False &  input_state1 == True & input_state2 == True:
+        #print("Button is PIN 13 DOWN")
+    else input_state3 == False:
         waveBand = 3
+        #print("Button is PIN 12 DOWN")
 
 
     # read the analog pin
@@ -110,8 +108,6 @@ while True:
 
         print "tune:"
         print trim_pot_tune
-        print "wave band:"
-        print waveBand
         print "..."
 
         if waveBand == 1:
