@@ -85,20 +85,21 @@ def readadc(adcnum, clockpin, mosipin, misopin, cspin):
 
 while True:
 
-    input_state = GPIO.input(21)
-    if input_state == False:
+    input_state1 = GPIO.input(21)
+    input_state2 = GPIO.input(13)
+    input_state3 = GPIO.input(12)
+
+    if input_state1 == False & input_state2 == False & input_state3 == False:
+        print "hello"
+
+    if input_state1 == False & input_state2 == True & input_state3 == True:
         waveBand = 1
-        #print("Button is PIN 21 DOWN")
 
-    input_state = GPIO.input(13)
-    if input_state == False:
+    if input_state2 == False &input_state1 == True & input_state3 == True:
         waveBand = 2
-        #print("Button is PIN 13 DOWN")
 
-    input_state = GPIO.input(12)
-    if input_state == False:
+    if input_state3 == False &  input_state1 == True & input_state2 == True:
         waveBand = 3
-        #print("Button is PIN 12 DOWN")
 
 
     # read the analog pin
