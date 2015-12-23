@@ -110,6 +110,8 @@ while True:
 
         print "tune:"
         print trim_pot_tune
+        print "wave band:"
+        print waveBand
         print "..."
 
         if waveBand == 1:
