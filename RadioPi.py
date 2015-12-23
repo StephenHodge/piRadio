@@ -120,7 +120,7 @@ def playStation(trim_pot_tune):
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/BBC6Music.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-        else waveBand == "Secular":
+        if waveBand == "Secular":
 
             if ((trim_pot_tune >= 0) & (trim_pot_tune < 341) & (currentChannel != "Radio_Devon")):
                 currentChannel = "Radio_Devon"
@@ -137,7 +137,7 @@ def playStation(trim_pot_tune):
                 print currentChannel
                 processStream = subprocess.Popen("./RadioStreams/RadioNorthDevon.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
-        else waveBand == "Christian":
+        if waveBand == "Christian":
 
             if ((trim_pot_tune >= 0) & (trim_pot_tune < 256) & (currentChannel != "CrossRhythms2")):
                 currentChannel = "CrossRhythms2"
