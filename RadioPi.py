@@ -33,15 +33,10 @@ GPIO.setup(SPIMISO, GPIO.IN)
 GPIO.setup(SPICLK, GPIO.OUT)
 GPIO.setup(SPICS, GPIO.OUT)
 
-# 10k trim pot connected to adc #0
-potentiometer_tune = 7
-potentiometer_vol = 6
-
 #setups for the buttons
 GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-
 
 
 def ledMode(Mode):
@@ -179,6 +174,9 @@ def adjustVolume(trim_pot_vol):
         print set_vol_cmd
         lastTrimPot_vol = trim_pot_vol
 
+# 10k trim pot connected to adc #0
+potentiometer_tune = 7
+potentiometer_vol = 6;
 
 while True:
 
