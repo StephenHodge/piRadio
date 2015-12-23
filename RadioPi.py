@@ -34,8 +34,8 @@ GPIO.setup(SPICLK, GPIO.OUT)
 GPIO.setup(SPICS, GPIO.OUT)
 
 # 10k trim pot connected to adc #0
-potentiometer_tune = 7;
-potentiometer_vol = 6;
+potentiometer_tune = 7
+potentiometer_vol = 6
 
 #setups for the buttons
 GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
