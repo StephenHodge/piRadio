@@ -19,6 +19,7 @@ lastTrimPot_vol = 0
 currentChannel = ""
 trimTollerance = 10
 waveBand = 0;
+gitUpdate = 0;
 
 # change these as desired - they're the pins connected from the
 # SPI port on the ADC to the Cobbler
@@ -98,7 +99,8 @@ while True:
     if input_state3 == False:
         waveBand = 3
         #print("Button is PIN 12 DOWN")
-    if (input_state1 == False) & (input_state2 == False) & (input_state3 == False):
+    if (input_state1 == False) & (input_state2 == False) & (input_state3 == False) & (gitUpdate == 0):
+        gitUpdate = 1
         process = subprocess.Popen("./updateFromGit.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
 
     # read the analog pin
