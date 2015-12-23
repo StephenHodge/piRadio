@@ -18,7 +18,7 @@ lastTrimPot_tune = 0
 lastTrimPot_vol = 0
 currentChannel = ""
 trimTollerance = 10
-waveBand = 0;
+waveBand = "";
 
 # change these as desired - they're the pins connected from the
 # SPI port on the ADC to the Cobbler
