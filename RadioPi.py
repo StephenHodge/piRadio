@@ -162,12 +162,14 @@ def playStation(trim_pot_tune):
         lastTrimPot_tune = trim_pot_tune
 
 def adjustVolume(trim_pot_vol):
-    
+
     #trim_pot = readadc(potentiometer_adc, SPICLK, SPIMOSI, SPIMISO, SPICS)
     #print trim_pot
+
     trimDifference_vol = abs(lastTrimPot_vol - trim_pot_vol)
 
     if trimDifference_vol >= trimTollerance:
+
         set_volume = trim_pot_vol / 10.24       # convert 10bit adc0 (0-1024) trim pot read into 0-100 volume level
         set_volume = round(set_volume)          # round out decimal value
         set_volume = int(set_volume)            # cast volume as integer
