@@ -98,6 +98,9 @@ while True:
     if input_state3 == False:
         waveBand = 3
         #print("Button is PIN 12 DOWN")
+    if (input_state1 == False) & (input_state2 == False) & (input_state3 == False)
+        print "COKAA"
+
 
 
     # read the analog pin
