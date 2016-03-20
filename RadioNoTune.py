@@ -1,0 +1,144 @@
+#!/usr/bin/env python
+
+#this should hopefully allow you to twist a potentiaomiter and play music
+import RPi.GPIO as GPIO
+import time
+import subprocess
+import os
+import signal
+
+#variables for LED GPIO
+LED_PIN = 5
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(LED_PIN, GPIO.OUT)
+
+#variables for chipset thingy
+DEBUG = 1
+lastTrimPot_tune = 0
+lastTrimPot_vol = 0
+currentChannel = ""
+trimTollerance = 10
+waveBand = 0;
+gitUpdate = 0;
+
+# change these as desired - they're the pins connected from the
+# SPI port on the ADC to the Cobbler
+SPICLK = 20
+SPIMISO = 26
+SPIMOSI = 19
+SPICS = 16
+
+# set up the SPI interface pins
+GPIO.setup(SPIMOSI, GPIO.OUT)
+GPIO.setup(SPIMISO, GPIO.IN)
+GPIO.setup(SPICLK, GPIO.OUT)
+GPIO.setup(SPICS, GPIO.OUT)
+
+# 10k trim pot connected to adc #0
+potentiometer_vol = 6;
+
+#setups for the buttons
+GPIO.setup(21, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(13, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(12, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
+
+
+def ledMode(Mode):
+    GPIO.output(LED_PIN, Mode)
+
+# read SPI data from MCP3008 chip, 8 possible adc's (0 thru 7)
+def readadc(adcnum, clockpin, mosipin, misopin, cspin):
+        if ((adcnum > 7) or (adcnum < 0)):
+                return -1
+        GPIO.output(cspin, True)
+
+        GPIO.output(clockpin, False)  # start clock low
+        GPIO.output(cspin, False)     # bring CS low
+
+        commandout = adcnum
+        commandout |= 0x18  # start bit + single-ended bit
+        commandout <<= 3    # we only need to send 5 bits here
+        for i in range(5):
+                if (commandout & 0x80):
+                        GPIO.output(mosipin, True)
+                else:
+                        GPIO.output(mosipin, False)
+                commandout <<= 1
+                GPIO.output(clockpin, True)
+                GPIO.output(clockpin, False)
+
+        adcout = 0
+        # read in one empty bit, one null bit and 10 ADC bits
+        for i in range(12):
+                GPIO.output(clockpin, True)
+                GPIO.output(clockpin, False)
+                adcout <<= 1
+                if (GPIO.input(misopin)):
+                        adcout |= 0x1
+
+        GPIO.output(cspin, True)
+
+        adcout >>= 1       # first bit is 'null' so drop it
+        return adcout
+
+
+while True:
+
+    input_state1 = GPIO.input(21)
+    input_state2 = GPIO.input(13)
+    input_state3 = GPIO.input(12)
+
+    if input_state1 == False:
+        waveBand = 1
+        #print("Button is PIN 21 DOWN")
+    if input_state2 == False:
+        waveBand = 2
+        #print("Button is PIN 13 DOWN")
+    if input_state3 == False:
+        waveBand = 3
+        #print("Button is PIN 12 DOWN")
+    if (input_state1 == False) & (input_state2 == False) & (input_state3 == False) & (gitUpdate == 0):
+        print "updating now"
+        gitUpdate = 1
+        process = subprocess.Popen("./updateFromGit.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+    if waveBand == 1:
+        currentChannel = "Radio_Two"
+        print currentChannel
+        ledMode(True)
+        process = subprocess.Popen("./RadioStreams/BBC2.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+    if waveBand == 2:
+        currentChannel = "Six_Music"
+        print currentChannel
+        ledMode(True)
+        process = subprocess.Popen("./RadioStreams/BBC6Music.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+    if waveBand == 3:
+        currentChannel = "Radio_Four"
+        print currentChannel
+        ledMode(True)
+        process = subprocess.Popen("./RadioStreams/BBC4.sh", stdout=subprocess.PIPE, shell=True, preexec_fn=os.setsid)
+
+        lastTrimPot_tune = trim_pot_tune
+
+        # read the analog pin
+        trim_pot_vol = readadc(potentiometer_vol, SPICLK, SPIMOSI, SPIMISO, SPICS)
+
+        trimDifference = abs(trim_pot_vol - lastTrimPot_vol)
+
+        if trimDifference >= trimTollerance:
+            set_volume = trim_pot_vol / 10.24           # convert 10bit adc0 (0-1024) trim pot read into 0-100 volume level
+            set_volume = round(set_volume)          # round out decimal value
+            set_volume = int(set_volume)            # cast volume as integer
+            set_vol_cmd = 'sudo amixer cset numid=1 -- {volume}% > /dev/null' .format(volume = set_volume)
+            os.system(set_vol_cmd)  # set volume
+
+            print "Volume: "
+            print trim_pot_vol
+            print "..."
+
+        lastTrimPot_vol = trim_pot_vol
+
+        time.sleep(0.5)
